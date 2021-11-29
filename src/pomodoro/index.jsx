@@ -90,6 +90,10 @@ function Pomodoro(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tick]);
 
+  useEffect(() => {
+    document.title = currentPomodoro.text;
+  }, [currentPomodoro]);
+
   const formatTime = (seconds) => {
     const min = Math.floor(seconds / 60);
     const sec = seconds % 60;
