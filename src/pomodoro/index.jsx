@@ -56,6 +56,7 @@ function Pomodoro(props) {
   useEffect(() => {
     if (started) {
       console.log("start");
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       interval = setInterval(() => {
         if (started) {
           setTick((prevTick) => prevTick + 1);
@@ -70,9 +71,6 @@ function Pomodoro(props) {
     if (started) {
       console.log("Time: ", currentPomodoroTime);
       if (currentPomodoroTime > 0) {
-        if (currentPomodoro.type === "break") {
-          beep();
-        }
         setCurrentPomodoroTime((prevState) => prevState - 1);
       } else {
         if (currentPomodoroIndex < pomodoroConfig.length - 1) {
@@ -82,12 +80,14 @@ function Pomodoro(props) {
           setCurrentPomodoroTime(
             pomodoroConfig[currentPomodoroIndex + 1].duration
           );
+          beep();
         } else {
           setCurrentPomodoroIndex(0);
           setCurrentPomodoroTime(pomodoroConfig[0].duration);
         }
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tick]);
 
   const formatTime = (seconds) => {
