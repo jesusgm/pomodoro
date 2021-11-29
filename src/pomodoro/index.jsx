@@ -9,20 +9,17 @@ const POMODORO_TYPES = {
   WORK: {
     type: "work",
     text: "Focus",
-    // duration: 25 * 60,
-    duration: 25,
+    duration: 25 * 60,
   },
   BREAK: {
     type: "break",
     text: "Break",
-    // duration: 5 * 60,
-    duration: 5,
+    duration: 5 * 60,
   },
   LONG_BREAK: {
     type: "break",
     text: "Break",
-    // duration: 15 * 60,
-    duration: 15,
+    duration: 15 * 60,
   },
 };
 
