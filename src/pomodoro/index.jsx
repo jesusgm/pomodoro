@@ -55,7 +55,6 @@ function Pomodoro(props) {
 
   useEffect(() => {
     if (started) {
-      console.log("start");
       // eslint-disable-next-line react-hooks/exhaustive-deps
       interval = setInterval(() => {
         if (started) {
@@ -69,7 +68,6 @@ function Pomodoro(props) {
 
   useEffect(() => {
     if (started) {
-      console.log("Time: ", currentPomodoroTime);
       if (currentPomodoroTime > 0) {
         setCurrentPomodoroTime((prevState) => prevState - 1);
       } else {
@@ -94,6 +92,38 @@ function Pomodoro(props) {
     document.title = currentPomodoro.text;
   }, [currentPomodoro]);
 
+  const nextPomodoro = () => {
+    if (currentPomodoroIndex < pomodoroConfig.length - 1) {
+      setCurrentPomodoroIndex(
+        (currentPomodoroIndex) => currentPomodoroIndex + 1
+      );
+      setCurrentPomodoroTime(pomodoroConfig[currentPomodoroIndex + 1].duration);
+      beep();
+    } else {
+      setCurrentPomodoroIndex(0);
+      setCurrentPomodoroTime(pomodoroConfig[0].duration);
+    }
+  };
+
+  const prevPomodoro = () => {
+    if (currentPomodoroIndex > 0) {
+      setCurrentPomodoroIndex(
+        (currentPomodoroIndex) => currentPomodoroIndex - 1
+      );
+      setCurrentPomodoroTime(pomodoroConfig[currentPomodoroIndex - 1].duration);
+    } else {
+      setCurrentPomodoroIndex(() => pomodoroConfig.length - 1);
+      setCurrentPomodoroTime(
+        pomodoroConfig[pomodoroConfig.length - 1].duration
+      );
+    }
+  };
+
+  const handleReset = () => {
+    setStated(false);
+    setCurrentPomodoroTime(pomodoroConfig[currentPomodoroIndex].duration);
+  };
+
   const formatTime = (seconds) => {
     const min = Math.floor(seconds / 60);
     const sec = seconds % 60;
@@ -115,7 +145,8 @@ function Pomodoro(props) {
         {currentPomodoroIndex + 1}/{pomodoroConfig.length} -{" "}
         {currentPomodoro.text}
       </div>
-      <div className="play-btn">
+      <div className="buttons-container">
+        <button onClick={prevPomodoro}>Prev</button>
         <button
           onClick={() => {
             clearInterval(interval);
@@ -124,6 +155,8 @@ function Pomodoro(props) {
         >
           {started ? "Pause" : "Start"}
         </button>
+        <button onClick={handleReset}>Reset</button>
+        <button onClick={nextPomodoro}>Next</button>
       </div>
     </div>
   );

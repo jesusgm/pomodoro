@@ -38,18 +38,20 @@ html, body, #root{
 }
 
 
-.pomodoro-container .play-btn{
+.pomodoro-container .buttons-container{
     text-align: center;
+    display: flex;
+    gap: .5rem;
 }
 
-.pomodoro-container .play-btn button{
+.pomodoro-container .buttons-container button{
     border: 1px solid;
     padding: 1rem 2rem;
     border-radius: 5px;
     cursor: pointer;
 }
 
-.pomodoro-container .play-btn button:hover,
-.pomodoro-container .play-btn button:focus{
+.pomodoro-container .buttons-container button:hover,
+.pomodoro-container .buttons-container button:focus{
     background-color: rgba(255,255,255,0.3);
 }
