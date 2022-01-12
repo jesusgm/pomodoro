@@ -5,6 +5,9 @@ import { CircularProgressbar as Progress } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import "./styles.css";
 
+import workIcon from "../icons/hard-hat-solid.svg";
+import breakIcon from "../icons/mug-hot-solid.svg";
+
 const POMODORO_TYPES = {
   WORK: {
     type: "work",
@@ -78,7 +81,6 @@ function Pomodoro(props) {
           setCurrentPomodoroTime(
             pomodoroConfig[currentPomodoroIndex + 1].duration
           );
-          beep();
         } else {
           setCurrentPomodoroIndex(0);
           setCurrentPomodoroTime(pomodoroConfig[0].duration);
@@ -90,7 +92,27 @@ function Pomodoro(props) {
 
   useEffect(() => {
     document.title = currentPomodoro.text;
+    changeFavicon();
+
+    if (started) {
+      if (currentPomodoro.type === "work") {
+        beep();
+        setTimeout(() => {
+          beep();
+        }, 500);
+      } else {
+        beep();
+      }
+    }
   }, [currentPomodoro]);
+
+  const changeFavicon = () => {
+    const favicon = document.querySelector('[rel="icon"]');
+
+    console.log(favicon);
+
+    favicon.href = currentPomodoro.type === "break" ? breakIcon : workIcon;
+  };
 
   const nextPomodoro = () => {
     if (currentPomodoroIndex < pomodoroConfig.length - 1) {
@@ -98,7 +120,6 @@ function Pomodoro(props) {
         (currentPomodoroIndex) => currentPomodoroIndex + 1
       );
       setCurrentPomodoroTime(pomodoroConfig[currentPomodoroIndex + 1].duration);
-      beep();
     } else {
       setCurrentPomodoroIndex(0);
       setCurrentPomodoroTime(pomodoroConfig[0].duration);
