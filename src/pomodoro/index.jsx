@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import confetti from "canvas-confetti";
+
 import { CircularProgressbar as Progress } from "react-circular-progressbar";
 
 import "react-circular-progressbar/dist/styles.css";
@@ -101,6 +103,7 @@ function Pomodoro(props) {
           beep();
         }, 500);
       } else {
+        confetti();
         beep();
       }
     }
