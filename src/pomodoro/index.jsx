@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import confetti from "canvas-confetti";
 
@@ -58,6 +58,14 @@ function Pomodoro(props) {
     snd.play();
   }
 
+  const changeFavicon = useCallback(() => {
+    const favicon = document.querySelector('[rel="icon"]');
+
+    console.log(favicon);
+
+    favicon.href = currentPomodoro.type === "break" ? breakIcon : workIcon;
+  }, [currentPomodoro.type]);
+
   useEffect(() => {
     if (started) {
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -107,15 +115,7 @@ function Pomodoro(props) {
         beep();
       }
     }
-  }, [currentPomodoro]);
-
-  const changeFavicon = () => {
-    const favicon = document.querySelector('[rel="icon"]');
-
-    console.log(favicon);
-
-    favicon.href = currentPomodoro.type === "break" ? breakIcon : workIcon;
-  };
+  }, [currentPomodoro, changeFavicon, started]);
 
   const nextPomodoro = () => {
     if (currentPomodoroIndex < pomodoroConfig.length - 1) {
