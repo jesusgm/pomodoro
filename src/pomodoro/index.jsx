@@ -61,8 +61,6 @@ function Pomodoro(props) {
   const changeFavicon = useCallback(() => {
     const favicon = document.querySelector('[rel="icon"]');
 
-    console.log(favicon);
-
     favicon.href = currentPomodoro.type === "break" ? breakIcon : workIcon;
   }, [currentPomodoro.type]);
 
